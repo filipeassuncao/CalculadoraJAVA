@@ -1,42 +1,34 @@
+class Memoria {  
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
-class Memoria {
-
-  
-
-    private String memoria = "0";
-    private String mplus = "0";
-     private String msub = "0";
+    private float memoria = 0;
+    private  float mplus = 0;
+     private float msub = 0;
     
 
-    void ms(String n) {
+    void ms(float n) {
         debug();
         memoria = n;
     }
 
-    String mr() {
+    float mr() {
         debug();
         return memoria;
     }
 
     void mc() {
         debug();
-        memoria = "0";
-      
+        memoria = 0;
     }
 
-    String mplus() {
-        debug(); 
-        mplus =  Float.toString(Float.parseFloat(mplus) + Float.parseFloat(memoria));
-         return  mplus;
+    float mplus(float n) {
+        debug();
+        mplus = n + memoria;
+        return  mplus;
     }
-    String msub() {
-        
-  msub =  Float.toString(Float.parseFloat(msub) - Float.parseFloat(memoria));
-         return  msub;
+    float msub(float n) {
+        debug();
+        msub =  n - memoria;
+        return  msub;
     }
 
     private boolean debug = true;

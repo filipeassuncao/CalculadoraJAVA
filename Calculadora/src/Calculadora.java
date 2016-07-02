@@ -1,12 +1,16 @@
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.io.IOException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 
 class Calculadora implements ActionListener {
 
-    private String OperandoA = "";
-    private String OperandoB = "";
-    private String Resultado = "Aguardando";
+    private String receptor = "";
+    private float operandoA = 0;
+    private float operandoB = 0;
+    private float resultado = -1;
 
     private JLabel texto;
     private Memoria m;
@@ -17,116 +21,129 @@ class Calculadora implements ActionListener {
         this.m = m;
     }
 
-    void setOperandoA() {
-        this.OperandoA = texto.getText();
-    }
-
-    public String getOperandoA() {
-        return OperandoA;
-    }
-
     void DIGITOS() {
-        setOperandoA();
-
+        
+        this.receptor = texto.getText();
+        
+        if (operacao == 0)
+            operandoA = Float.parseFloat(receptor);
+        else 
+            operandoB = Float.parseFloat(receptor);
     }
 
     void SOMAR() {
 
         operacao = 1;
-        OperandoB = OperandoA;
-        OperandoA = "";
+        receptor = "";
     }
 
     void SUBTRAIR() {
         operacao = 2;
-        OperandoB = OperandoA;
-        OperandoA = "";
+        receptor = "";
     }
 
     void DIVIDIR() {
         operacao = 3;
-        OperandoB = OperandoA;
-        OperandoA = "";
+        receptor = "";
     }
 
     void MULTIPLICAR() {
         operacao = 4;
-        OperandoB = OperandoA;
-        OperandoA = "";
+        receptor = "";
     }
 
     void PORCENTAGEM() {
         operacao = 5;
-        OperandoB = OperandoA;
-        OperandoA = "";
-
+        receptor = "";
     }
 
     void RAIZ() {
         operacao = 6;
-        OperandoB = OperandoA;
-        OperandoA = "";
+        receptor = "";
         RESULTADO();
     }
 
     void CLEAN() {
         texto.setText("0");
-        OperandoA = "";
-        OperandoB = "";
+        receptor = "";
+        operacao = 0;
+        operandoA = 0;
+        operandoB = 0;
 
+    }
+    
+    void filesave(){   
+        
+        try{
+        FileWriter arq = new FileWriter("/home/filipe/NetBeansProjects/CalculadoraV3/historico/historico.txt", true);
+        PrintWriter gravarArq = new PrintWriter(arq);
+
+        gravarArq.printf("Operando A: " + operandoA + "\n Operação: " + operacao + "\n Operando B: " + operandoB + "\n Resultado: " + resultado + "\n");
+
+        arq.close();
+ 
+        System.out.printf("\n Historico gravado com sucesso em /home/filipe/NetBeansProjects/CalculadoraV3/historico/historico.txt.\n");
+  
+        }catch(IOException e){
+            JOptionPane.showMessageDialog(null, "Falha ao salvar arquivo");
+             e.printStackTrace(); // isso vai exibir as últimas chamadas de método
+        }
     }
 
     void RESULTADO() {
         switch (operacao) {
             case 1: {
                 operacao = 1; //somar
-                Resultado = Float.toString(Float.parseFloat(OperandoB) + Float.parseFloat(texto.getText()));
-                OperandoA = Resultado;
-                texto.setText(Resultado);
+                resultado = operandoA + operandoB;
+                operandoA = resultado;
+                texto.setText("" + resultado);
                 break;
             }
             case 2: {
                 operacao = 2; //subtrair
-                Resultado = Float.toString(Float.parseFloat(OperandoB) - Float.parseFloat(texto.getText()));
-                OperandoA = Resultado;
-                texto.setText(Resultado);
+                resultado = operandoA - operandoB;
+                operandoA = resultado;
+                texto.setText("" + resultado);
                 break;
             }
             case 3: {
 
                 operacao = 3; //dividir
-                Resultado = Float.toString(Float.parseFloat(OperandoB) / Float.parseFloat(texto.getText()));
-                OperandoA = Resultado;
-                texto.setText(Resultado);
+                if (operandoB != 0){
+                    resultado = operandoA / operandoB;
+                    texto.setText("" + resultado);
+                } else {
+                    resultado = 0;
+                    texto.setText("Indeterminação");
+                }
                 break;
 
             }
 
             case 4: {
                 operacao = 4; //multiplicar
-                Resultado = Float.toString(Float.parseFloat(OperandoB) * Float.parseFloat(texto.getText()));
-                OperandoA = Resultado;
-                texto.setText(Resultado);
+                resultado = operandoA * operandoB;
+                operandoA = resultado;
+                texto.setText("" + resultado);
                 break;
             }
 
             case 5: {
                 operacao = 5;
-                Resultado = (Float.toString((Float.parseFloat(OperandoB) * Float.parseFloat(texto.getText())) / 100));
-                OperandoA = Resultado;
-                texto.setText(Resultado);
+                resultado = ((operandoA * operandoB)/ 100);
+                operandoA = resultado;
+                texto.setText("" + resultado);
                 break;
 
             }
             case 6: {
                 operacao = 6;
-                Resultado = (Float.toString((float) Math.sqrt(Float.parseFloat(texto.getText()))));
-                OperandoA = Resultado;
-                texto.setText(Resultado);
+                resultado = (float) Math.sqrt(operandoA + operandoB);
+                operandoA = resultado;
+                texto.setText("" + resultado);
                 break;
             }
-           
-
+          
         }
 
     }
@@ -152,126 +169,137 @@ class Calculadora implements ActionListener {
         } else if (cmd.equals("PORCENTAGEM")) {
             PORCENTAGEM();
         } else if (cmd.equals("1")) {
-            if (Resultado.equals(OperandoA)) {
+            if (resultado == operandoA) {
                 CLEAN();
                 texto.setText("1");
                 DIGITOS();
 
             } else {
-                texto.setText(OperandoA + "1");
+                texto.setText(receptor + "1");
             }
             DIGITOS();
 
         } else if (cmd.equals("2")) {
-            if (Resultado.equals(OperandoA)) {
+            if (resultado == operandoA) {
                 CLEAN();
                 texto.setText("2");
                 DIGITOS();
             } else {
-                texto.setText(OperandoA + "2");
+                texto.setText(receptor + "2");
             }
             DIGITOS();
 
         } else if (cmd.equals("3")) {
-            if (Resultado.equals(OperandoA)) {
+            if (resultado == operandoA) {
                 CLEAN();
                 texto.setText("3");
                 DIGITOS();
             } else {
-                texto.setText(OperandoA + "3");
+                texto.setText(receptor + "3");
             }
             DIGITOS();
+            
         } else if (cmd.equals("4")) {
-            if (Resultado.equals(OperandoA)) {
+            if (resultado == operandoA) {
                 CLEAN();
                 texto.setText("4");
                 DIGITOS();
             } else {
-                texto.setText(OperandoA + "4");
+                texto.setText(receptor + "4");
             }
             DIGITOS();
+        
         } else if (cmd.equals("5")) {
-            if (Resultado.equals(OperandoA)) {
+            if (resultado == operandoA) {
                 CLEAN();
                 texto.setText("5");
                 DIGITOS();
             } else {
-                texto.setText(OperandoA + "5");
+                texto.setText(receptor + "5");
             }
             DIGITOS();
+        
         } else if (cmd.equals("6")) {
-            if (Resultado.equals(OperandoA)) {
+            if (resultado == operandoA) {
                 CLEAN();
                 texto.setText("6");
                 DIGITOS();
             } else {
-                texto.setText(OperandoA + "6");
+                texto.setText(receptor + "6");
             }
             DIGITOS();
+        
         } else if (cmd.equals("7")) {
-            if (Resultado.equals(OperandoA)) {
+            if (resultado == operandoA) {
                 CLEAN();
                 texto.setText("7");
                 DIGITOS();
             } else {
-                texto.setText(OperandoA + "7");
+                texto.setText(receptor + "7");
             }
             DIGITOS();
+        
         } else if (cmd.equals("8")) {
-            if (Resultado.equals(OperandoA)) {
+            if (resultado == operandoA) {
                 CLEAN();
                 texto.setText("8");
                 DIGITOS();
             } else {
-                texto.setText(OperandoA + "8");
+                texto.setText(receptor + "8");
             }
             DIGITOS();
+        
         } else if (cmd.equals("9")) {
-            if (Resultado.equals(OperandoA)) {
+            if (resultado == operandoA) {
                 CLEAN();
                 texto.setText("9");
                 DIGITOS();
             } else {
-                texto.setText(OperandoA + "9");
+                texto.setText(receptor + "9");
             }
             DIGITOS();
+        
         } else if (cmd.equals("0")) {
-            if (Resultado.equals(OperandoA)) {
+            if (resultado == operandoA) {
                 CLEAN();
                 texto.setText("0");
                 DIGITOS();
             } else {
-                texto.setText(OperandoA + "0");
+                texto.setText(receptor + "0");
             }
             DIGITOS();
+        
         } else if (cmd.equals("PONTO")) {
-            if (Resultado.equals(OperandoA)) {
+            if (resultado == operandoA) {
                 CLEAN();
                 texto.setText(".");
                 DIGITOS();
             } else {
-                texto.setText(OperandoA + ".");
+                texto.setText(receptor + ".");
             }
             DIGITOS();
-        } 
         
-        else if (cmd.equals("MS")) {
-            m.ms(texto.getText());
-            OperandoA = "";
-            OperandoB = "";
+        } else if (cmd.equals("MS")) {
+            m.ms(Float.parseFloat(texto.getText()));
+            receptor = "";
+            operandoA = 0;
+            operandoB = 0;
         } else if (cmd.equals("MR")) {
-            texto.setText(m.mr());
-            OperandoA = "";
-            OperandoB = "";
+            texto.setText("" + m.mr());
+            receptor = "";
+            operandoA = 0;
+            operandoB = 0;
 
         } else if (cmd.equals("MADD")) {
 
-            texto.setText(m.mplus());
+            texto.setText("" + m.mplus(Float.parseFloat(texto.getText())));
+        
         } else if (cmd.equals("MSUB")) {
 
-            texto.setText(m.msub());
+            texto.setText("" + m.msub(Float.parseFloat(texto.getText())));
+        } else if (cmd.equals("FILE")) {
+            filesave();
         }
     }
 
 }//()
-
