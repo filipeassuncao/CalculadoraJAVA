@@ -9,6 +9,7 @@ class Calculadora implements ActionListener {
 
     private String receptor = "";
     private float operandoA = 0;
+    private float operandoAtxt = 0;
     private float operandoB = 0;
     private float resultado = -1;
 
@@ -25,8 +26,10 @@ class Calculadora implements ActionListener {
         
         this.receptor = texto.getText();
         
-        if (operacao == 0)
+        if (operacao == 0){
             operandoA = Float.parseFloat(receptor);
+            operandoAtxt = operandoA;
+        }
         else 
             operandoB = Float.parseFloat(receptor);
     }
@@ -75,14 +78,14 @@ class Calculadora implements ActionListener {
     void filesave(){   
         
         try{
-        FileWriter arq = new FileWriter("/home/filipe/NetBeansProjects/CalculadoraV3/historico/historico.txt", true);
+        FileWriter arq = new FileWriter("/home/filipe/NetBeansProjects/GitHub/CalculadoraJAVA/historico.txt", true);
         PrintWriter gravarArq = new PrintWriter(arq);
 
-        gravarArq.printf("Operando A: " + operandoA + "\n Operação: " + operacao + "\n Operando B: " + operandoB + "\n Resultado: " + resultado + "\n");
+        gravarArq.printf("----------------------\n Operando A: " + operandoAtxt + "\n Operação: " + operacao + "\n Operando B: " + operandoB + "\n Resultado: " + resultado + "\n");
 
         arq.close();
  
-        System.out.printf("\n Historico gravado com sucesso em /home/filipe/NetBeansProjects/CalculadoraV3/historico/historico.txt.\n");
+        System.out.printf("\n Historico gravado com sucesso em /home/filipe/NetBeansProjects/GitHub/CalculadoraJAVA/historico.txt.\n");
   
         }catch(IOException e){
             JOptionPane.showMessageDialog(null, "Falha ao salvar arquivo");
@@ -292,11 +295,26 @@ class Calculadora implements ActionListener {
 
         } else if (cmd.equals("MADD")) {
 
-            texto.setText("" + m.mplus(Float.parseFloat(texto.getText())));
+            operandoA = Float.parseFloat(texto.getText());
+            operandoAtxt = operandoA; 
+            operandoB = m.mr();
+            resultado = m.mplus(Float.parseFloat(texto.getText()));
+            
+            texto.setText("" + resultado);
+            
+            operacao = 1; //    System.out.println( "" + resultado + " = " + operandoA + " operacao " + operacao + "  " + operandoB );
         
         } else if (cmd.equals("MSUB")) {
 
-            texto.setText("" + m.msub(Float.parseFloat(texto.getText())));
+            operandoA = Float.parseFloat(texto.getText());
+            operandoAtxt = operandoA;
+            operandoB = m.mr();
+            resultado = m.msub(Float.parseFloat(texto.getText()));
+            
+            texto.setText("" + resultado);
+            
+            operacao = 2; //    System.out.println( "" + resultado + " = " + operandoA + " operacao " + operacao + "  " + operandoB );
+       
         } else if (cmd.equals("FILE")) {
             filesave();
         }

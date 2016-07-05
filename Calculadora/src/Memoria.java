@@ -37,7 +37,5 @@ class Memoria {
         if (debug) {
             System.out.println("m = " + memoria);
         }
-    }
-
- 
+    } 
 }//

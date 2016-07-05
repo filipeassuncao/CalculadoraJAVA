@@ -1,6 +1,0 @@
-Operando A: 0.0
-Operando B: 0.0
-Resultado: -1.0
-Operando A: 98.0
-Operando B: 2.0
-Resultado: 49.0

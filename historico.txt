@@ -1,0 +1,30 @@
+----------------------
+ Operando A: 8.0
+ Operação: 1
+ Operando B: 4.0
+ Resultado: 12.0
+----------------------
+ Operando A: 5.0
+ Operação: 2
+ Operando B: 12.0
+ Resultado: -7.0
+----------------------
+ Operando A: -7.0
+ Operação: 2
+ Operando B: 12.0
+ Resultado: -19.0
+----------------------
+ Operando A: -19.0
+ Operação: 1
+ Operando B: 12.0
+ Resultado: -7.0
+----------------------
+ Operando A: -7.0
+ Operação: 1
+ Operando B: 12.0
+ Resultado: 5.0
+----------------------
+ Operando A: 5.0
+ Operação: 1
+ Operando B: 12.0
+ Resultado: 17.0
