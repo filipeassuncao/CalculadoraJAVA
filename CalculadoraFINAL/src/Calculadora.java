@@ -1,9 +1,6 @@
-import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.io.IOException;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+
 
 class Calculadora implements ActionListener {
 
