@@ -4,27 +4,37 @@
  Operando B: 4.0
  Resultado: 12.0
 ----------------------
- Operando A: 5.0
+ Operando A: 9.0
  Operação: 2
  Operando B: 12.0
- Resultado: -7.0
+ Resultado: -3.0
 ----------------------
- Operando A: -7.0
+ Operando A: -3.0
  Operação: 2
  Operando B: 12.0
- Resultado: -19.0
+ Resultado: -15.0
 ----------------------
- Operando A: -19.0
+ Operando A: -15.0
  Operação: 1
  Operando B: 12.0
- Resultado: -7.0
+ Resultado: -3.0
 ----------------------
- Operando A: -7.0
+ Operando A: -3.0
  Operação: 1
  Operando B: 12.0
- Resultado: 5.0
+ Resultado: 9.0
 ----------------------
- Operando A: 5.0
+ Operando A: 9.0
  Operação: 1
  Operando B: 12.0
- Resultado: 17.0
+ Resultado: 21.0
+----------------------
+ Operando A: 9.0
+ Operação: 1.0
+ Operando B: 3.0
+ Resultado: 12.0
+----------------------
+ Operando A: 9.0
+ Operação: 1.0
+ Operando B: 3.0
+ Resultado: 12.0
