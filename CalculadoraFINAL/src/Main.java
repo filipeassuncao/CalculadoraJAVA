@@ -1,13 +1,7 @@
-import java.awt.*;
-import static java.awt.Color.BLACK;
-import static java.awt.Color.RED;
-import static java.awt.Color.WHITE;
-import static java.awt.Color.black;
 import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
+
+
 
 class Main {
 
